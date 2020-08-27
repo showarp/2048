@@ -61,18 +61,13 @@ function generate(){                      //生成方块函数
     }
     sjobj = {            //需要传入一个已经变化的地图以在空白的地方生成方块
         arr : mapt,
-        sjx : function(){
-            this.dz+=1;
-             return this.x = Math.floor(Math.random()*this.arr.length);
-        },
-        sjy : function(){
-            return this.y = Math.floor(Math.random()*this.arr[this.sjx()].length);
-        },
+        x : Math.floor(Math.random()*this.arr.length),
+        y : Math.floor(Math.random()*this.arr[this.x].length),
         sj : function(){
             // if(this.arr[this.sjx()][this.sjy()]==undefined ){
 
             // }
-            return this.arr[this.sjx()][this.sjy()];
+            return this.arr[this.x][this.y];
         }
     };
     sc(sjobj.sj());
