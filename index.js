@@ -1,6 +1,7 @@
 gd = document.querySelectorAll('.gd');
 mapd = new Array(4);
 mapt = new Array();         //创建剩余地图的数组
+b = 0;
 for(let i = 0 ;i<4;i++){
     mapt[i] = new Array();
 }
@@ -40,23 +41,18 @@ function judgment(){                        //判断函数
             });
         };
     });
-
-
-console.log(mapd);
-
-
-}
-
-
+    // console.log(mapd)
+};
 function generate(){                      //生成方块函数
-    mapd.forEach((nm1,ix1)=>{              //记录已经变化的地图  必须以这个殿后来结束这个函数
+    mapd.forEach((nm1,ix1)=>{              //记录发生变化后的地图  必须以这个殿后来结束这个函数
         mapd[ix1].forEach((nm2,ix2)=>{
-            if(mapd[ix1][ix2].value!=true){
+            if(mapd[ix1][ix2].value==false){
                 mapt[ix1][ix2] = mapd[ix1][ix2].prent;      //载入没有方块的地图
+            }else{
+                mapt[ix1].splice(ix2,1);
             };
         });
     });
-
     function sc(mp){        //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块
         div = document.createElement('div');
         div.className = 'sbox';
@@ -75,11 +71,13 @@ function generate(){                      //生成方块函数
         }
     };
     sc(sjobj.sj());
-
-    console.log(mapt);
-
-
-
+    b+=1;
+    document.querySelector('.sbox').innerHTML=b;
+    // console.log(mapt);
 }
-generate();
-judgment();
+function fuckoff(){
+    judgment();        //mapd
+    generate();        //mapt
+    console.log(mapt);
+}
+fuckoff();
