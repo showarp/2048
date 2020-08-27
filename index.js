@@ -53,8 +53,6 @@ function judgment(){                        //判断函数
     });
     // console.log(mapd)
 };
-dzx=0;                    //递增用于辅助记录sobj x 对象两个属性的值。
-dzy=0;                    //递增用于辅助记录sobj y 对象两个属性的值。
 function generate(){                      //生成方块函数
     function sc(mp){        //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块
         div = document.createElement('div');
@@ -63,15 +61,12 @@ function generate(){                      //生成方块函数
     }
     sjobj = {            //需要传入一个已经变化的地图以在空白的地方生成方块
         arr : mapt,
-        x : new Array(),        //存放x轴已经生成过数字
-        y: new Array(),        //存放y轴已经生成过数字
         sjx : function(){
-            dzx+=1;
-             return this.x[dzx] = Math.floor(Math.random()*this.arr.length);
+            this.dz+=1;
+             return this.x = Math.floor(Math.random()*this.arr.length);
         },
         sjy : function(){
-            dzy+=1;
-            return this.y[dzy] = Math.floor(Math.random()*this.arr[this.sjx()].length);
+            return this.y = Math.floor(Math.random()*this.arr[this.sjx()].length);
         },
         sj : function(){
             // if(this.arr[this.sjx()][this.sjy()]==undefined ){
