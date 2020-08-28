@@ -22,6 +22,7 @@ for(let x = 0 ;x<mapd.length ;x++){
     }
 }
 function judgment(){                        //判断函数
+    console.log(mapt)
     gd.forEach((ne1,ix1)=>{                //用于判断地图内是否有方块 有的话value值为true 否则false
         if(gd[ix1].querySelectorAll('div').length>=1){
         mapd.forEach((ne2,ix2)=>{
@@ -46,7 +47,6 @@ function judgment(){                        //判断函数
             if(mapd[ix1][ix2].value==false){
                 mapt[ix1][ix2] = mapd[ix1][ix2].prent;      //载入没有方块的地图
             }else{
-                // mapt[ix1].splice(ix2,1);
                 mapt[ix1][ix2] = undefined;
             };
         });
@@ -61,14 +61,22 @@ function generate(){                      //生成方块函数
     }
     sjobj = {            //需要传入一个已经变化的地图以在空白的地方生成方块
         arr : mapt,
-        x : Math.floor(Math.random()*this.arr.length),
-        y : Math.floor(Math.random()*this.arr[this.x].length),
+		x: undefined,
+		y:undefined,
+        sjx : function (){
+			 x =  Math.floor(Math.random()*this.arr.length);
+			 console.log(x)
+        },
+        sjy : function (){
+			this.sjx()
+            y =  Math.floor(Math.random()*this.arr[x].length);
+        },
         sj : function(){
             // if(this.arr[this.sjx()][this.sjy()]==undefined ){
-
             // }
-            return this.arr[this.x][this.y];
-        }
+			this.sjy()
+			return this.arr[x][y];
+		}
     };
     sc(sjobj.sj());
     b+=1;
@@ -78,7 +86,6 @@ function generate(){                      //生成方块函数
 function fuckoff(){           //生成随机数
     judgment();        //mapd
     generate();        //mapt
-    console.log(mapt);
 }
 fuckoff();
 fuckoff();
