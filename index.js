@@ -22,7 +22,6 @@ for(let x = 0 ;x<mapd.length ;x++){
     }
 }
 function judgment(){                        //判断函数
-    console.log(mapt)
     gd.forEach((ne1,ix1)=>{                //用于判断地图内是否有方块 有的话value值为true 否则false
         if(gd[ix1].querySelectorAll('div').length>=1){
         mapd.forEach((ne2,ix2)=>{
@@ -51,10 +50,12 @@ function judgment(){                        //判断函数
             };
         });
     });
-    // console.log(mapd)
 };
+sx = undefined;
+sy = undefined;
 function generate(){                      //生成方块函数
-    function sc(mp){        //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块
+    function sc(mp){        //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块 r
+        //如果父元素为undefined的话则创建失败（已经有子元素的则为undefined）
         div = document.createElement('div');
         div.className = 'sbox';
         mp.appendChild(div);
@@ -64,29 +65,36 @@ function generate(){                      //生成方块函数
 		x: undefined,
 		y:undefined,
         sjx : function (){
-			 x =  Math.floor(Math.random()*this.arr.length);
-			 console.log(x)
+             this.x =  Math.floor(Math.random()*this.arr.length);
+             if(this.x == sx){
+                 this.sjx();
+             }
+             sx = this.x;
         },
         sjy : function (){
-			this.sjx()
-            y =  Math.floor(Math.random()*this.arr[x].length);
+            this.sjx();
+            this.y = Math.floor(Math.random()*this.arr[this.x].length);
+            if(this.y == sy){
+                this.sjy();
+            }
+            sy = this.y;
         },
         sj : function(){
             // if(this.arr[this.sjx()][this.sjy()]==undefined ){
             // }
-			this.sjy()
-			return this.arr[x][y];
+			this.sjy(); 
+			return this.arr[this.x][this.y];
 		}
     };
     sc(sjobj.sj());
     b+=1;
     document.querySelector('.sbox').innerHTML=b;
-    // console.log(mapt);
 }
 function fuckoff(){           //生成随机数
     judgment();        //mapd
     generate();        //mapt
 }
+
 fuckoff();
 fuckoff();
 fuckoff();
