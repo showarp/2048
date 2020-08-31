@@ -59,6 +59,8 @@ function generate(){                      //生成方块函数
         div = document.createElement('div');
         div.className = 'sbox';
         mp.appendChild(div);
+        document.querySelector('.sbox').innerHTML=b++;
+
     }
     sjobj = {            //需要传入一个已经变化的地图以在空白的地方生成方块
         arr : mapt,
@@ -68,7 +70,7 @@ function generate(){                      //生成方块函数
             this.x =  Math.floor(Math.random()*this.arr.length);
             this.y = Math.floor(Math.random()*this.arr[this.x].length);
             if(sx.includes(this.x)&&sy.includes(this.y)){
-                this.sjxy();
+                this.sjxy();   //如果触发了👆则递归此函数 但有可能会进入死循环
             }else{
                 sx.push(this.x);
                 sy.push(this.y);
@@ -83,13 +85,16 @@ function generate(){                      //生成方块函数
     };
     var ssj = sjobj.sj();
     sc(ssj);
-    b+=1;
-    document.querySelector('.sbox').innerHTML=b;
+    
 }
-function fuckoff(){           //生成随机数
+function newblock(){           //生成随机数
     judgment();        //mapd
     generate();        //mapt
 }
 
-fuckoff();
-fuckoff();
+newblock();
+newblock();
+newblock();
+newblock();
+newblock();
+newblock();
