@@ -51,8 +51,8 @@ function judgment(){                        //判断函数
         });
     });
 };
-sx = undefined;
-sy = undefined;
+sx = new Array();
+sy = new Array();
 function generate(){                      //生成方块函数
     function sc(mp){        //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块 r
         //如果父元素为undefined的话则创建失败（已经有子元素的则为undefined）
@@ -64,29 +64,25 @@ function generate(){                      //生成方块函数
         arr : mapt,
 		x: undefined,
 		y:undefined,
-        sjx : function (){
-             this.x =  Math.floor(Math.random()*this.arr.length);
-             if(this.x == sx){
-                 this.sjx();
-             }
-             sx = this.x;
-        },
-        sjy : function (){
-            this.sjx();
+        sjxy : function (){
+            this.x =  Math.floor(Math.random()*this.arr.length);
             this.y = Math.floor(Math.random()*this.arr[this.x].length);
-            if(this.y == sy){
-                this.sjy();
-            }
-            sy = this.y;
+            if(sx.includes(this.x)&&sy.includes(this.y)){
+                this.sjxy();
+            }else{
+                sx.push(this.x);
+                sy.push(this.y);
+            };
         },
         sj : function(){
             // if(this.arr[this.sjx()][this.sjy()]==undefined ){
             // }
-			this.sjy(); 
+            this.sjxy();
 			return this.arr[this.x][this.y];
 		}
     };
-    sc(sjobj.sj());
+    var ssj = sjobj.sj();
+    sc(ssj);
     b+=1;
     document.querySelector('.sbox').innerHTML=b;
 }
@@ -95,7 +91,5 @@ function fuckoff(){           //生成随机数
     generate();        //mapt
 }
 
-fuckoff();
-fuckoff();
 fuckoff();
 fuckoff();
