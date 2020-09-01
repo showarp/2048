@@ -1,7 +1,6 @@
 gd = document.querySelectorAll('.gd');
 mapd = new Array(4);
 mapt = new Array();         //创建剩余地图的数组
-b = 0;
 for(let i = 0 ;i<4;i++){
     mapt[i] = new Array();
 }
@@ -21,6 +20,7 @@ for(let x = 0 ;x<mapd.length ;x++){
         };
     }
 }
+console.log(mapd)
 function judgment(){                        //判断函数
     gd.forEach((ne1,ix1)=>{                //用于判断地图内是否有方块 有的话value值为true 否则false
         if(gd[ix1].querySelectorAll('div').length>=1){
@@ -51,16 +51,13 @@ function judgment(){                        //判断函数
         });
     });
 };
-sx = new Array();
-sy = new Array();
-function generate(){                      //生成方块函数
+sboxlist = -1;
+function generate(num){                      //生成方块函数
     function sc(mp){        //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块 r
         //如果父元素为undefined的话则创建失败（已经有子元素的则为undefined）
-        div = document.createElement('div');
-        div.className = 'sbox';
-        mp.appendChild(div);
-        document.querySelector('.sbox').innerHTML=b++;
-
+         div = document.createElement('div');
+         div.className = 'sbox';
+         mp.appendChild(div);
     }
     sjobj = {            //需要传入一个已经变化的地图以在空白的地方生成方块
         arr : mapt,
@@ -69,12 +66,9 @@ function generate(){                      //生成方块函数
         sjxy : function (){
             this.x =  Math.floor(Math.random()*this.arr.length);
             this.y = Math.floor(Math.random()*this.arr[this.x].length);
-            if(sx.includes(this.x)&&sy.includes(this.y)){
+            if(mapt[this.x][this.y] == undefined){
                 this.sjxy();   //如果触发了👆则递归此函数 但有可能会进入死循环
-            }else{
-                sx.push(this.x);
-                sy.push(this.y);
-            };
+            }
         },
         sj : function(){
             // if(this.arr[this.sjx()][this.sjy()]==undefined ){
@@ -84,17 +78,16 @@ function generate(){                      //生成方块函数
 		}
     };
     var ssj = sjobj.sj();
+    console.log(ssj);
     sc(ssj);
-    
+    document.querySelectorAll('.sbox')[sboxlist+=1].innerHTML=num;
+    console.log(sboxlist);
 }
-function newblock(){           //生成随机数
+function newblock(num){           //生成随机数
     judgment();        //mapd
-    generate();        //mapt
+    generate(num);        //mapt
 }
 
-newblock();
-newblock();
-newblock();
-newblock();
-newblock();
-newblock();
+newblock(1);
+newblock(2);
+

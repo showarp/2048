@@ -32,4 +32,9 @@ body{
     width: 100%;
     background: #EEE4DA;
     border-radius: 5px;
+    text-align: center;
+    line-height: 90px;
+    font-weight: bold;
+    font-size: 40px;
+    color:#776E65;
 }
