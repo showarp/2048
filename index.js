@@ -99,7 +99,6 @@ function game() {
         newblock();
         newblock();
     };
-
     function playgame() {
         function wsad(e) {
             newblock();
@@ -109,16 +108,23 @@ function game() {
                         mapd.forEach((nm1, ix1) => {
                             mapd[ix1].forEach((nm2, ix2) => {
                                 if (mapd[ix1][ix2].value == true) {     //指定方块
-                                    if (ix1 != 0) {             //判断指定方块上方是否还有空格
-                                        if (mapd[ix1 - 1][ix2].value == true) {  //判断指定方块上面是否还有方块
-                                            console.log(mapd[ix1][ix2].prent, '上面有个方块',mapd[ix1-1][ix2].prent);
-                                        } else {
-                                            console.log(mapd[ix1][ix2].prent,'上面没有方块');
+                                    if (ix1 != 0) {             //判断指定方块上方是否还有位置
+                                        for(let i=ix1-1;i>=0;i--){
+                                            if(mapd[i][ix2].value==true){
+                                                console.log('我是',mapd[ix1][ix2].prent,'我上面有',mapd[i][ix2].prent);   //判断指定方块上方是否有方块
+                                            }else{
+                                                          //这里有点问题
+                                            }
                                         }
+                                        // if (mapd[ix1 - 1][ix2].value == true) {  //判断指定方块上面一格是否还有方块
+                                        //     console.log(mapd[ix1][ix2].prent, '上面有个方块',mapd[ix1-1][ix2].prent);
+                                        // } else {
+                                        //     console.log(mapd[ix1][ix2].prent,'上面没有方块');
+                                        // }
                                     }else{
-                                        console.log(mapd[ix1][ix2].prent,'上面是顶啦');
-                                    }
-                                }
+                                        console.log('到顶了');
+                                    };
+                                };
                             })
                         });
                         break;
@@ -134,7 +140,7 @@ function game() {
                 }
             };
 
-            blockmobile(e.keyCode)
+            blockmobile(e.keyCode);
         };
         window.addEventListener('keydown', wsad);
     };
