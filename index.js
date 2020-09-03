@@ -20,7 +20,6 @@ for (let x = 0; x < mapd.length; x++) {
         };
     }
 }
-
 function judgment() { //判断函数
     gd.forEach((ne1, ix1) => { //用于判断地图内是否有方块 有的话value值为true 否则false
         if (gd[ix1].querySelectorAll('div').length >= 1) {
@@ -52,7 +51,6 @@ function judgment() { //判断函数
     });
 };
 sboxlist = -1;
-
 function generate(num) { //生成方块函数
     function sc(mp, num) { //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块 r
         //如果父元素为undefined的话则创建失败（已经有子元素的则为undefined）
@@ -93,7 +91,6 @@ function newblock() { //生成随机数
     judgment(); //mapd
     generate(sjnum); //mapt
 }
-
 function game() {
     function start() {
         newblock();
@@ -107,39 +104,41 @@ function game() {
                     case 87: //w
                         mapd.forEach((nm1, ix1) => {
                             mapd[ix1].forEach((nm2, ix2) => {
-                                if (mapd[ix1][ix2].value == true) {     //指定方块
-                                    if (ix1 != 0) {             //判断指定方块上方是否还有位置
-                                        for(let i=ix1-1;i>=0;i--){
-                                            if(mapd[i][ix2].value==true){
-                                                console.log('我是',mapd[ix1][ix2].prent,'我上面有',mapd[i][ix2].prent);   //判断指定方块上方是否有方块
-                                            }else{
-                                                          //这里有点问题
+                                if (mapd[ix1][ix2].value == true) { //指定方块
+                                    if (ix1 != 0) { //判断指定方块上方是否还有位置
+                                        for (let i = ix1 - 1; i >= 0; i--) {    //遍历上方的空格
+                                            if (mapd[i][ix2].value == true) { //判断指定方块上方是否有方块
+                                                if (Number(mapd[ix1][ix2].prent.querySelector('div').innerHTML) == Number(mapd[i][ix2].prent.querySelector('div').innerHTML)) {
+                                                    //如果上方的方块内容数字 和自己一样的话则相加
+                                                    let div1 = mapd[ix1][ix2].prent;
+                                                    let div2 = mapd[i][ix2].prent;
+                                                    div2.querySelector('div').innerHTML = Number(div1.querySelector('div').innerHTML) + Number(div2.querySelector('div').innerHTML);
+                                                    div1.removeChild(div1.querySelector('div'));
+                                                }
+                                                break;
+                                            } else {
+                                                // let div1 = mapd[ix1][ix2].prent;    //当前 方块
+                                                // let div2 = mapd[0][ix2].prent;    //最顶部的空位
+                                                // div2.appendChild(div1.querySelector('div'));
+                                                // div1.removeChild(div1.querySelector('div'));
+                                                // break;
                                             }
                                         }
-                                        // if (mapd[ix1 - 1][ix2].value == true) {  //判断指定方块上面一格是否还有方块
-                                        //     console.log(mapd[ix1][ix2].prent, '上面有个方块',mapd[ix1-1][ix2].prent);
-                                        // } else {
-                                        //     console.log(mapd[ix1][ix2].prent,'上面没有方块');
-                                        // }
-                                    }else{
+                                    } else {
                                         console.log('到顶了');
                                     };
                                 };
-                            })
+                            });
                         });
                         break;
                     case 83: //s
-
                         break;
                     case 65: //a
-
                         break;
                     case 68: //d
-
                         break;
                 }
             };
-
             blockmobile(e.keyCode);
         };
         window.addEventListener('keydown', wsad);
