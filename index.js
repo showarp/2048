@@ -116,13 +116,12 @@ function game() {
                                                     div1.removeChild(div1.querySelector('div'));
                                                 }
                                                 break;
-                                            } else {
-                                                // let div1 = mapd[ix1][ix2].prent;    //当前 方块
-                                                // let div2 = mapd[0][ix2].prent;    //最顶部的空位
-                                                // div2.appendChild(div1.querySelector('div'));
-                                                // div1.removeChild(div1.querySelector('div'));
-                                                // break;
-                                            }
+                                            }else{
+                                                console.log(mapd[ix1][ix2].prent,'上面没有东西');
+                                                mapd[0][ix2].prent.appendChild(mapd[ix1][ix2].prent.querySelector('div'));
+                                                mapd[ix1][ix2].prent.removeChild(mapd[ix1][ix2].prent.querySelector('div'));
+                                                break;
+                                            };
                                         }
                                     } else {
                                         console.log('到顶了');
