@@ -20,6 +20,7 @@ for (let x = 0; x < mapd.length; x++) {
         };
     }
 }
+
 function judgment() { //判断函数
     gd.forEach((ne1, ix1) => { //用于判断地图内是否有方块 有的话value值为true 否则false
         if (gd[ix1].querySelectorAll('div').length >= 1) {
@@ -50,6 +51,7 @@ function judgment() { //判断函数
         });
     });
 };
+
 function generate(num) { //生成方块函数
     function sc(mp, num) { //生成的函数需要传入一个父元素以在此之下创建子元素也就是方块 r
         //如果父元素为undefined的话则创建失败（已经有子元素的则为undefined）
@@ -79,21 +81,24 @@ function generate(num) { //生成方块函数
     var ssj = sjobj.sj();
     sc(ssj, num);
 }
+
 function newblock() { //生成随机数
-    sjnum = Math.round(Math.random() * 10);
+    // sjnum = Math.round(Math.random() * 10);
     // if (sjnum <= 5) {
     //     sjnum = 2;
     // } else {
     //     sjnum = 4;
     // }
-    judgment(); 
-    generate(4); //这里应该是 generate(sjnum)  然后85-89的注释要取消
+    judgment();
+    generate(2); //这里应该是 generate(sjnum)  然后85-89的注释要取消
 }
+
 function game() {
     function start() {
         newblock();
         newblock();
     };
+
     function playgame() {
         function wsad(e) {
             function blockmobile(wsad) {
@@ -101,57 +106,164 @@ function game() {
                     case 87: //w
                         mapd.forEach((nm1, ix1) => {
                             mapd[ix1].forEach((nm2, ix2) => {
-                                if (mapd[ix1][ix2].value == true) { //指定方块
-                                    if (ix1 != 0) { //判断指定方块上方是否还有位置
-                                        for (let i = ix1-1; i>0; i--) {    //遍历上方的空格
-//        这里又有问题     i>=0(i最小为-1) 或  i>0(i最小为0)    
-//使用前面那个的话会导致 108行因没有mapd[-1][ix2]而报错   
-//使用 后者的话 没法和最上面那一排相加 原因不明
-                                            if (mapd[i][ix2].value == true) { //判断指定方块上方是否有方块
+                                if (mapd[ix1][ix2].value == true) {
+                                    if (ix1 != 0) {
+                                        for (let i = ix1 - 1; i >= 0; i--) {
+                                            if (mapd[i][ix2].value == true) {
                                                 if (mapd[ix1][ix2].prent.querySelector('div').innerHTML == mapd[i][ix2].prent.querySelector('div').innerHTML) {
-//如果上面那条语句的第二项判断说innerHtml是空的话 那则可能mapd[i][ix2]这个地图里面是没有方块的或者根本没有 mapd[i][ix2]这个地图
+                                                    
                                                     let div1 = mapd[ix1][ix2].prent;
                                                     let div2 = mapd[i][ix2].prent;
                                                     div2.querySelector('div').innerHTML = Number(div1.querySelector('div').innerHTML) + Number(div2.querySelector('div').innerHTML);
                                                     div1.removeChild(div1.querySelector('div'));
                                                     break;
-                                                }else{
+                                                } else {
                                                     let div1 = mapd[ix1][ix2].prent;
-                                                    let div2 = mapd[i+1][ix2].prent;
+                                                    let div2 = mapd[i + 1][ix2].prent;
                                                     div2.appendChild(div1.querySelector('div'));
+                                                    judgment();
                                                     break;
                                                 }
                                                 break;
-                                            }else if(i==0){      //这里的问题是 这个代码块里面的break； 导致只检测上面一个是否是break； 解决思路 使其在最后一次循环的时候执行下面的语句
+                                            } else if (i == 0) {
                                                 let div1 = mapd[ix1][ix2].prent;
                                                 let div2 = mapd[0][ix2].prent;
                                                 div2.appendChild(div1.querySelector('div'));
                                                 break;
                                             };
-                                            ///////////////////////////////////////问题应该是 执行了 true之后就不执行false了
+                                            
+                                            judgment();
                                         };
                                     } else {
-                                        console.log('到顶了');
                                     };
+                                    judgment();
                                 };
                             });
                         });
+                        judgment();
                         break;
                     case 83: //s
+                    let newmapd = mapd.slice().reverse();
+                    newmapd.forEach((nm1, ix1) => {
+                        newmapd[ix1].forEach((nm2, ix2) => {
+                            if (newmapd[ix1][ix2].value == true) {
+                                if (ix1 != 0) {
+                                    for (let i = ix1 - 1; i >= 0; i--) {
+                                        if (newmapd[i][ix2].value == true) {
+                                            if (newmapd[ix1][ix2].prent.querySelector('div').innerHTML == newmapd[i][ix2].prent.querySelector('div').innerHTML) {
+                                                let div1 = newmapd[ix1][ix2].prent;
+                                                let div2 = newmapd[i][ix2].prent;
+                                                div2.querySelector('div').innerHTML = Number(div1.querySelector('div').innerHTML) + Number(div2.querySelector('div').innerHTML);
+                                                div1.removeChild(div1.querySelector('div'));
+                                                break;
+                                            } else {
+                                                let div1 = newmapd[ix1][ix2].prent;
+                                                let div2 = newmapd[i + 1][ix2].prent;
+                                                div2.appendChild(div1.querySelector('div'));
+                                                judgment();
+                                                break;
+                                            }
+                                            break;
+                                        } else if (i == 0) {
+                                            let div1 = newmapd[ix1][ix2].prent;
+                                            let div2 = newmapd[0][ix2].prent;
+                                            div2.appendChild(div1.querySelector('div'));
+                                            break;
+                                        };
+                                        judgment();
+                                    };
+                                } else {
+                                };
+                                judgment();
+                            };
+                        });
+                    });
+                    judgment();
                         break;
                     case 65: //a
+                    mapd.forEach((nm1, ix1) => {
+                        mapd[ix1].forEach((nm2, ix2) => {
+                            if (mapd[ix1][ix2].value == true) { 
+                                if (ix2 != 0) { 
+                                    for (let i = ix2 - 1; i >= 0; i--) { 
+                                        if (mapd[ix1][i].value == true) { 
+                                            if (mapd[ix1][ix2].prent.querySelector('div').innerHTML == mapd[ix1][i].prent.querySelector('div').innerHTML) {      
+                                                let div1 = mapd[ix1][ix2].prent;
+                                                let div2 = mapd[ix1][i].prent;
+                                                div2.querySelector('div').innerHTML = Number(div1.querySelector('div').innerHTML) + Number(div2.querySelector('div').innerHTML);
+                                                div1.removeChild(div1.querySelector('div'));
+                                                break;
+                                            } else {
+                                                let div1 = mapd[ix1][ix2].prent;
+                                                let div2 = mapd[ix1][i+1].prent;
+                                                div2.appendChild(div1.querySelector('div'));
+                                                judgment();
+                                                break;
+                                            }
+                                            break;
+                                        } else if (i == 0) {
+                                            let div1 = mapd[ix1][ix2].prent;
+                                            let div2 = mapd[ix1][0].prent;
+                                            div2.appendChild(div1.querySelector('div'));
+                                            break;
+                                        };
+                                        judgment();
+                                    };
+                                } else {
+                                };
+                                judgment();
+                            };
+                        });
+                    });
+                    judgment();
                         break;
                     case 68: //d
+                    mapd.forEach((nm1, ix1) => {
+                        mapd[ix1].forEach((nm2, ix2) => {
+                            if (mapd[ix1][ix2].value == true) { 
+                                if (ix2 != 0) { 
+                                    for (let i = ix2 - 1; i >= 0; i--) { 
+                                        if (mapd[ix1][i].value == true) { 
+                                            if (mapd[ix1][ix2].prent.querySelector('div').innerHTML == mapd[ix1][i].prent.querySelector('div').innerHTML) {      
+                                                let div1 = mapd[ix1][ix2].prent;
+                                                let div2 = mapd[ix1][i].prent;
+                                                div2.querySelector('div').innerHTML = Number(div1.querySelector('div').innerHTML) + Number(div2.querySelector('div').innerHTML);
+                                                div1.removeChild(div1.querySelector('div'));
+                                                break;
+                                            } else {
+                                                let div1 = mapd[ix1][ix2].prent;
+                                                let div2 = mapd[ix1][i+1].prent;
+                                                div2.appendChild(div1.querySelector('div'));
+                                                judgment();
+                                                break;
+                                            }
+                                            break;
+                                        } else if (i == 0) {
+                                            let div1 = mapd[ix1][ix2].prent;
+                                            let div2 = mapd[ix1][0].prent;
+                                            div2.appendChild(div1.querySelector('div'));
+                                            break;
+                                        };
+                                        judgment();
+                                    };
+                                } else {
+                                };
+                                judgment();
+                            };
+                        });
+                    });
+                    judgment();
                         break;
                 }
+                judgment();
             };
-            newblock();
+            judgment();
             blockmobile(e.keyCode);
+            newblock();
         };
         window.addEventListener('keydown', wsad);
     };
     start();
     playgame();
 }
-
 game();
