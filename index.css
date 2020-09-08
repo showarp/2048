@@ -38,3 +38,10 @@ body{
     font-size: 40px;
     color:#776E65;
 }
+#gs{
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    filter:blur(0px);
+    transition:2s all;
+}

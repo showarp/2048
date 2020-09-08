@@ -72,7 +72,7 @@ function generate(num) { //生成方块函数
                 this.sjxy(); //如果触发了👆则递归此函数 但有可能会进入死循环
             }
             }catch(err){
-                alert('只有撞到南墙才会回头吗？');
+                
             }
         },
         sj: function () {
@@ -80,7 +80,7 @@ function generate(num) { //生成方块函数
             // }
             this.sjxy();
             return this.arr[this.x][this.y];
-        }
+        }   
     };
     var ssj = sjobj.sj();
     sc(ssj, num);
@@ -164,7 +164,6 @@ function game() {
                                     for (let i = ix1 - 1; i >= 0; i--) {
                                         if (mapd[i][ix2].value == true) {
                                             if (mapd[ix1][ix2].prent.querySelector('div').innerHTML == mapd[i][ix2].prent.querySelector('div').innerHTML) {
-                                                
                                                 let div1 = mapd[ix1][ix2].prent;
                                                 let div2 = mapd[i][ix2].prent;
                                                 div2.querySelector('div').innerHTML = Number(div1.querySelector('div').innerHTML) + Number(div2.querySelector('div').innerHTML);
@@ -184,7 +183,6 @@ function game() {
                                             div2.appendChild(div1.querySelector('div'));
                                             break;
                                         };
-                                        
                                         judgment();
                                     };
                                 } else {
@@ -322,71 +320,90 @@ function game() {
             newblock();
         }
             
-            // let list = document.querySelectorAll('.sbox')
-            // if(list.length==16){
-            //     mapd.forEach((nm1,ix1)=>{
-            //         mapd[ix1].forEach((nm2,ix2)=>{
-            //             let ddiv = Number(mapd[ix1][ix2].prent.querySelector('div').innerHTML);
-            //             if(ix1==0){
-            //                 let divBottom = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 if(ix2==0){
-            //                     let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);  
-            //                     if(ddiv!=divBottom&&ddiv!=divRight){
-            //                     alert('1reset')
-            //                     }                              
-            //                 }else if(ix2==3){
-            //                     let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
-            //                     if(ddiv!=divBottom&&ddiv!=divLeft){
-            //                     alert('2reset')
-            //                     }
-            //                 }else{
-            //                 let ddiv = Number(mapd[ix1][ix2].prent.querySelector('div').innerHTML);
-            //                 let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
-            //                 let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
-            //                 let divBottom = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 let divTop = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 if(ddiv!=divTop&&ddiv!=divBottom&&ddiv!=divLeft&&ddiv!=divRight){
-            //                     alert('3reset')
-            //                 }
-            //                 }
-            //             }else if(ix1==3){
-            //                 let divTop = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 if(ix2==0){
-            //                     let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
-            //                     if(ddiv!=divTop&&ddiv!=divRight){
-            //                     alert('4reset')
-            //                     }                                   
-            //                 }else if(ix2==3){
-            //                     let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
-            //                     if(ddiv!=divBottom&&ddiv!=divLeft){
-            //                     alert('5reset')
-            //                     }   
-            //                 }else{
-            //                 let ddiv = Number(mapd[ix1][ix2].prent.querySelector('div').innerHTML);
-            //                 let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
-            //                 let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
-            //                 let divBottom = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 let divTop = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 if(ddiv!=divTop&&ddiv!=divBottom&&ddiv!=divLeft&&ddiv!=divRight){
-            //                     alert('6reset')
-            //                 }
-            //                 }
-            //             }else{
-            //                 let ddiv = Number(mapd[ix1][ix2].prent.querySelector('div').innerHTML);
-            //                 let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
-            //                 let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
-            //                 let divBottom = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 let divTop = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
-            //                 if(ddiv!=divTop&&ddiv!=divBottom&&ddiv!=divLeft&&ddiv!=divRight){
-            //                     alert('7reset')
-            //                 }
-            //             }
-                        
-            //         })
-            //     })
-            // }
-            
+            let list = document.querySelectorAll('.sbox')
+            if(list.length==16){
+                let pd = 0;
+                mapd.forEach((nm1,ix1)=>{
+                    mapd[ix1].forEach((nm2,ix2)=>{
+                        let ddiv = Number(mapd[ix1][ix2].prent.querySelector('div').innerHTML);     //定义好了本身
+                        if(ix1==0){              //↖↑↗
+                            let divBottom = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);     //定义好了下面
+                            if(ix2==0){        //左上
+                                let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);  
+                                if(ddiv!=divBottom&&ddiv!=divRight){
+                                pd+=1;
+                                }                              
+                            }else if(ix2==3){      //右上
+                                let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
+                                if(ddiv!=divBottom&&ddiv!=divLeft){
+                                pd+=1;
+                                }
+                            }else{      //中上
+                            let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
+                            let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
+                            if(ddiv!=divBottom&&ddiv!=divLeft&&ddiv!=divRight){
+                                pd+=1;
+                            }
+                            }
+                        }else if(ix1==3){          // ↙↓↘
+                            let divTop = Number(mapd[ix1-1][ix2].prent.querySelector('div').innerHTML);     //定义好了上面
+                            if(ix2==0){         //左下
+                                let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
+                                if(ddiv!=divTop&&ddiv!=divRight){
+                                pd+=1;
+                                }                                   
+                            }else if(ix2==3){     //右下
+                                let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
+                                if(ddiv!=divTop&&ddiv!=divLeft){
+                                pd+=1;
+                                }   
+                            }else{               //中下
+                            let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
+                            let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
+                            if(ddiv!=divTop&&ddiv!=divLeft&&ddiv!=divRight){
+                                pd+=1;
+                            }
+                            }
+                        }else{
+                            let divBottom = Number(mapd[ix1+1][ix2].prent.querySelector('div').innerHTML);
+                            let divTop = Number(mapd[ix1-1][ix2].prent.querySelector('div').innerHTML);
+                            if(ix2==0){
+                                let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
+                                if(ddiv!=divRight&&ddiv!=divBottom&&ddiv!=divTop){
+                                    pd+=1
+                                }
+                            }else if(ix2==3){
+                                let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
+                                if(ddiv!=divLeft&&ddiv!=divBottom&&ddiv!=divTop){
+                                    pd+=1
+                                }
+                            }else{
+                                let divLeft = Number(mapd[ix1][ix2-1].prent.querySelector('div').innerHTML);
+                                let divRight = Number(mapd[ix1][ix2+1].prent.querySelector('div').innerHTML);
+                                if(ddiv!=divTop&&ddiv!=divBottom&&ddiv!=divLeft&&ddiv!=divRight){
+                                    pd+=1
+                                }
+                            }
+                        }
+                        if(pd==16){
+                            window.removeEventListener('keydown', wsad);
+                            gs = document.querySelector('#gs');
+                            setTimeout(()=>{
+                                gs.style.filter ='blur(10px)'
+                            },1000);
+                            setTimeout(()=>{
+                                alert('restart');
+                                location.reload();
+                            },3000);
+                        }
+                    })
+                });
+            };
         };
+        function phone(e){
+
+        }
+        window.addEventListener('touchstart',phone)
         window.addEventListener('keydown', wsad);
     };
     start();
